@@ -129,4 +129,24 @@ trait StringFormatCheck
     {
         return preg_match('#^[A-Za-z0-9:/;,\-_\?&\.%\+\|\#=]*$#', $entity);
     }
+
+    /**
+     * Format: email.
+     * @param $entity
+     * @return bool
+     */
+    public function formatEmail($entity)
+    {
+        return filter_var($entity, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    /**
+     * Format: ip.
+     * @param $entity
+     * @return bool
+     */
+    public function formatIp($entity)
+    {
+        return filter_var($entity, FILTER_VALIDATE_IP) !== false;
+    }
 }
