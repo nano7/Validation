@@ -17,20 +17,8 @@
     },
 
     "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
-
         "psr-4": {
             "Nano7\\Validation\\": "src/"
-        }
-    },
-
-    "extra": {
-        "nano7": {
-            "providers": [
-                "Nano7\\Validation\\ValidationServiceProviders"
-            ]
         }
     },
 
