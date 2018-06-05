@@ -1,0 +1,39 @@
+{
+    "name"       : "nano7/validation",
+    "description": "The Nano7 Validation package.",
+    "license"    : "GPL-3.0-only",
+
+    "authors"    : [
+        {
+            "name" : "Bruno Goncalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php"                   : ">=5.5.0",
+        "nano7/foundation"      : "dev-master"
+
+    },
+
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+
+        "psr-4": {
+            "Nano7\\Validation\\": "src/"
+        }
+    },
+
+    "extra": {
+        "nano7": {
+            "providers": [
+                "Nano7\\Validation\\ValidationServiceProviders"
+            ]
+        }
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable"    : true
+}
