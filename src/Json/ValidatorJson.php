@@ -1,7 +1,6 @@
 <?php namespace Nano7\Validation\Json;
 
 use Nano7\Foundation\Support\Str;
-use Nano7\Foundation\Application;
 use Nano7\Foundation\Support\Filesystem;
 use Nano7\Validation\Json\Checks\AnyCheck;
 use Nano7\Validation\Json\Checks\ArrayCheck;
@@ -24,11 +23,6 @@ class ValidatorJson
     use StringFormatCheck;
 
     /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
      * @var Filesystem
      */
     protected $files;
@@ -49,13 +43,11 @@ class ValidatorJson
     protected $errors = [];
 
     /**
-     * @param Application $app
      * @param Filesystem $files
      * @param string $schemaPath
      */
-    public function __construct($app, $files, $schemaPath)
+    public function __construct($files, $schemaPath)
     {
-        $this->app = $app;
         $this->files = $files;
         $this->schemaPath = $schemaPath;
     }
