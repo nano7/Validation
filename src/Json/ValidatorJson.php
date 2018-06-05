@@ -57,7 +57,7 @@ class ValidatorJson
      * @param mixed $entity
      * @param string $schemaName
      *
-     * @return $this
+     * @return bool
      */
     public function validate($entity, $schemaName)
     {
@@ -65,7 +65,20 @@ class ValidatorJson
 
         $this->validateTypes($entity, $this->loadSchema($schemaName), 'root');
 
-        return $this;
+        return (count($this->errors) == 0);
+    }
+
+    /**
+     * @param null $key
+     * @return array
+     */
+    public function getErros($key = null)
+    {
+        if (is_null($key)) {
+            return $this->errors;
+        }
+
+        return array_key_exists($key, $this->errors) ? $this->errors[$key] : null;
     }
 
     /**
@@ -156,7 +169,7 @@ class ValidatorJson
      */
     public function error($entityName, $message)
     {
-        $this->errors[$entityName][] = "[$entityName]: $message";
+        $this->errors[$entityName][] = $message;
 
         return false;
     }
