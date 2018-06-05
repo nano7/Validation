@@ -17,7 +17,7 @@ class ValidationException extends \Exception
     {
         parent::__construct($message, $code, $previous);
 
-        $this->errors;
+        $this->errors = $errors;
     }
 
     /**
