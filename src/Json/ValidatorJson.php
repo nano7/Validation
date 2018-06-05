@@ -87,6 +87,7 @@ class ValidatorJson
      * @param $entity
      * @param $schema
      * @param $entityName
+     * @return bool
      */
     protected function validateTypes($entity, $schema, $entityName)
     {
@@ -94,8 +95,12 @@ class ValidatorJson
         $types = is_array($types) ? $types : [$types];
 
         foreach ($types as $type) {
-            $this->validateType($type, $entity, $schema, $entityName);
+            if (! $this->validateType($type, $entity, $schema, $entityName)) {
+                return false;
+            }
         }
+
+        return true;
     }
 
     /**
@@ -109,13 +114,31 @@ class ValidatorJson
      */
     protected function validateType($type, $entity, $schema, $entityName)
     {
+        // Veriifcar se eh um tipo simples
         $method = sprintf('checkType%s', Str::studly($type));
-        if (! method_exists($this, $method)) {
-            $this->error($entityName, "Property type invalid or not found [$type]");
-            return false;
+        if (method_exists($this, $method)) {
+            return call_user_func_array([$this, $method], [$entity, $schema, $entityName]);
         }
 
-        return call_user_func_array([$this, $method], [$entity, $schema, $entityName]);
+        // Verificar se eh um tipo complexo
+        if ($this->existsSchema($type)) {
+            return $this->validateComplexType($type, $entity, $entityName);
+        }
+
+        return $this->error($entityName, "Property type invalid or not found [$type]");
+    }
+
+    /**
+     * @param $type
+     * @param $entity
+     * @param $entityName
+     * @return bool
+     */
+    protected function validateComplexType($type, $entity, $entityName)
+    {
+        $schema = $this->loadSchema($type);
+
+        return $this->validateTypes($entity, $schema, $entityName);
     }
 
     /**
@@ -201,5 +224,24 @@ class ValidatorJson
         }
 
         return $this->schemas[$schema_key] = $schema;
+    }
+
+    /**
+     * @param $schemaName
+     * @return bool
+     */
+    protected function existsSchema($schemaName)
+    {
+        $schema_key = strtolower($schemaName);
+
+        // Se jah foi carregado. Existe.
+        if (array_key_exists($schema_key, $this->schemas)) {
+            return true;
+        }
+
+        // Verificar se arquivo existe
+        $file_schema = $this->files->combine($this->schemaPath, $schemaName . '.json');
+
+        return $this->files->exists($file_schema);
     }
 }
