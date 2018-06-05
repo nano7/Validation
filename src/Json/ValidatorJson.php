@@ -43,12 +43,11 @@ class ValidatorJson
     protected $errors = [];
 
     /**
-     * @param Filesystem $files
      * @param string $schemaPath
      */
-    public function __construct($files, $schemaPath)
+    public function __construct($schemaPath)
     {
-        $this->files = $files;
+        $this->files = new Filesystem();
         $this->schemaPath = $schemaPath;
     }
 
