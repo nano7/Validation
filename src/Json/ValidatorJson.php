@@ -56,14 +56,15 @@ class ValidatorJson
      *
      * @param mixed $entity
      * @param string $schemaName
+     * @param string $rootName
      *
      * @return bool
      */
-    public function validate($entity, $schemaName)
+    public function validate($entity, $schemaName, $rootName = 'root')
     {
         $this->errors = [];
 
-        $this->validateTypes($entity, $this->loadSchema($schemaName), 'root');
+        $this->validateTypes($entity, $this->loadSchema($schemaName), $rootName);
 
         return (count($this->errors) == 0);
     }
