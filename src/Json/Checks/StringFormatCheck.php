@@ -5,20 +5,13 @@ use Nano7\Foundation\Support\Str;
 trait StringFormatCheck
 {
     /**
-     * @var array
-     */
-    protected $formats = [];
-
-    /**
      * @param $formatName
      * @param $callback
-     * @return $this
+     * @return void
      */
-    public function format($formatName, $callback)
+    public static function format($formatName, $callback)
     {
-        $this->formats[$formatName] = $callback;
-
-        return $this;
+        static::$formats[$formatName] = $callback;
     }
 
     /**
@@ -50,8 +43,8 @@ trait StringFormatCheck
         }
 
         // Verificar se format foi implementado por extend
-        if (array_key_exists($format, $this->formats)) {
-            if (! call_user_func_array($this->formats[$format], [$entity])) {
+        if (array_key_exists($format, static::$formats)) {
+            if (! call_user_func_array(static::$formats[$format], [$entity])) {
                 return $this->error($entityName, "Value must match format [$schema->format]");
             }
         }
@@ -121,7 +114,7 @@ trait StringFormatCheck
     }
 
     /**
-     * Format: uri.
+     * Format: URI.
      * @param $entity
      * @return bool
      */
@@ -141,12 +134,32 @@ trait StringFormatCheck
     }
 
     /**
-     * Format: ip.
+     * Format: IP.
      * @param $entity
      * @return bool
      */
     public function formatIp($entity)
     {
         return filter_var($entity, FILTER_VALIDATE_IP) !== false;
+    }
+
+    /**
+     * Format: Uri Level (folder, subdomain).
+     * @param $entity
+     * @return bool
+     */
+    public function formatUrilevel($entity)
+    {
+        return preg_match('/^[a-zA-Z0-9_-]+$/', $entity);
+    }
+
+    /**
+     * Format: Language.
+     * @param $entity
+     * @return bool
+     */
+    public function formatLanguage($entity)
+    {
+        return preg_match('/^[a-z]{2}(?:_[a-zA-Z]{2})?$/', $entity);
     }
 }

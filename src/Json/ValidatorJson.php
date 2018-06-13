@@ -1,6 +1,5 @@
 <?php namespace Nano7\Validation\Json;
 
-use Nano7\Foundation\Support\Arr;
 use Nano7\Foundation\Support\Str;
 use Nano7\Foundation\Support\Filesystem;
 use Nano7\Validation\Json\Checks\AnyCheck;
@@ -49,6 +48,13 @@ class ValidatorJson
     protected $options = [
         'array_equal_object' => false,
     ];
+
+    /**
+     * List of formats custom.
+     *
+     * @var array
+     */
+    protected static $formats = [];
 
     /**
      * @param string $schemaPath
