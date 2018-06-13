@@ -231,7 +231,7 @@ class ValidatorJson
      * @param $schemaName
      * @return bool
      */
-    protected function existsSchema($schemaName)
+    public function existsSchema($schemaName)
     {
         $schema_key = strtolower($schemaName);
 
