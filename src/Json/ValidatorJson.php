@@ -1,5 +1,6 @@
 <?php namespace Nano7\Validation\Json;
 
+use Nano7\Foundation\Support\Arr;
 use Nano7\Foundation\Support\Str;
 use Nano7\Foundation\Support\Filesystem;
 use Nano7\Validation\Json\Checks\AnyCheck;
@@ -43,12 +44,21 @@ class ValidatorJson
     protected $errors = [];
 
     /**
-     * @param string $schemaPath
+     * @var array
      */
-    public function __construct($schemaPath)
+    protected $options = [
+        'array_equal_object' => false,
+    ];
+
+    /**
+     * @param string $schemaPath
+     * @param array $options
+     */
+    public function __construct($schemaPath, $options = [])
     {
         $this->files = new Filesystem();
         $this->schemaPath = $schemaPath;
+        $this->options = array_merge([], $this->options, $options);
     }
 
     /**
