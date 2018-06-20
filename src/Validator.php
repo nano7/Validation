@@ -65,7 +65,7 @@ class Validator
     protected function makeSchemaRule($rule)
     {
         // Tratar regras
-        $list = explode(',', $rule);
+        $list = explode('|', $rule);
         $rules = [];
         foreach ($list as $item) {
             list($rule, $params) = explode(':', $item);
