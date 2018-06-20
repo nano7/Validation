@@ -244,6 +244,17 @@ class ValidatorJson
     }
 
     /**
+     * @param $name
+     * @param $schema
+     */
+    public function registerVirtualSchema($name, $schema)
+    {
+        $name = strtolower($name);
+
+        $this->schemas[$name] = $schema;
+    }
+
+    /**
      * @param $schemaName
      * @return bool
      */
