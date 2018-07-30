@@ -65,7 +65,7 @@ trait RequiredCheck
      * @param $ruleValue
      * @return bool
      */
-    protected function checkRequiredWithout($entity, $schema, $ruleValue)
+    protected function checkTypeRequiredWithout($entity, $schema, $ruleValue)
     {
         $ruleValue = (array) $ruleValue;
 
@@ -86,7 +86,7 @@ trait RequiredCheck
      * @param $ruleValue
      * @return bool
      */
-    protected function checkRequiredWithoutAll($entity, $schema, $ruleValue)
+    protected function checkTypeRequiredWithoutAll($entity, $schema, $ruleValue)
     {
         $ruleValue = (array) $ruleValue;
 
