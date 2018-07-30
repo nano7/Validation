@@ -18,6 +18,9 @@ trait RequiredCheck
     /**
      * Check required_with.
      *
+     * O campo sob validação deve estar presente apenas se algum dos outros campos
+     * especificados estiver presente.
+     *
      * @param $entity
      * @param $schema
      * @param $ruleValue
@@ -38,6 +41,9 @@ trait RequiredCheck
 
     /**
      * Check required_with_all.
+     *
+     * O campo sob validação deve estar presente apenas se todos os outros campos
+     * especificados estiverem presentes.
      *
      * @param $entity
      * @param $schema
@@ -60,6 +66,9 @@ trait RequiredCheck
     /**
      * Check required_without.
      *
+     * O campo sob validação deve estar presente apenas quando algum dos outros campos
+     * especificados não estiver presente.
+     *
      * @param $entity
      * @param $schema
      * @param $ruleValue
@@ -80,6 +89,9 @@ trait RequiredCheck
 
     /**
      * Check required_without_all.
+     *
+     * O campo sob validação deve estar presente apenas quando todos os outros campos
+     * especificados não estiverem presentes.
      *
      * @param $entity
      * @param $schema
