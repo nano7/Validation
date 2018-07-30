@@ -162,4 +162,25 @@ trait StringFormatCheck
     {
         return preg_match('/^[a-z]{2}(?:_[a-zA-Z]{2})?$/', $entity);
     }
+
+    /**
+     * Format: Version.
+     * @param $entity
+     * @return bool
+     */
+    public function formatVersion($entity)
+    {
+        return preg_match('/^[0-9]+(\\.[0-9]+)*$/', $entity);
+    }
+
+    /**
+     * Format: Version List.
+     * @param $entity
+     * @return bool
+     */
+    public function formatVersionlist($entity)
+    {
+        // Ex.: 1.0,2.0.8
+        return preg_match('/^([0-9]+(\\.[0-9]+)*)(,([0-9]+(\\.[0-9]+)*))*$/', $entity);
+    }
 }
