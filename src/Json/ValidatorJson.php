@@ -9,6 +9,7 @@ use Nano7\Validation\Json\Checks\NumberCheck;
 use Nano7\Validation\Json\Checks\ObjectCheck;
 use Nano7\Validation\Json\Checks\StringCheck;
 use Nano7\Validation\Json\Checks\BooleanCheck;
+use Nano7\Validation\Json\Checks\RequiredCheck;
 use Nano7\Validation\Json\Checks\StringFormatCheck;
 
 class ValidatorJson
@@ -20,6 +21,7 @@ class ValidatorJson
     use ObjectCheck;
     use NumberCheck;
     use BooleanCheck;
+    use RequiredCheck;
     use StringFormatCheck;
 
     /**
@@ -159,6 +161,30 @@ class ValidatorJson
     }
 
     /**
+     * Validar requires.
+     *
+     * @param $entity
+     * @param $schema
+     * @return bool
+     */
+    protected function validateRequires($entity, $schema)
+    {
+        $options = ['required', 'required_with', 'required_with_all', 'required_without', 'required_without_all'];
+
+        // Veriifcar se eh um validacao de required
+        foreach ($options as $rule) {
+            $method = sprintf('checkType%s', Str::studly($rule));
+            $required_value = isset($schema->{$rule}) ? $schema->{$rule} : null;
+
+            if ((! is_null($required_value)) &&  method_exists($this, $method)) {
+                return call_user_func_array([$this, $method], [$entity, $schema, $required_value]);
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Validate object properties
      *
      * @param object $entity
@@ -183,9 +209,12 @@ class ValidatorJson
                 $this->validateTypes($entity->{$propertyName}, $property, $path);
             } else {
                 // Check required
-                if (isset($property->required) && $property->required) {
+                if ($this->validateRequires($entity, $property)) {
                     $this->error($entityName, "Missing required property [$propertyName]");
                 }
+                //if (isset($property->required) && $property->required) {
+                //    $this->error($entityName, "Missing required property [$propertyName]");
+                //}
             }
         }
 
