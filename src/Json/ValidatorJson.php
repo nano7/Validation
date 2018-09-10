@@ -1,7 +1,7 @@
 <?php namespace Nano7\Validation\Json;
 
-use Nano7\Foundation\Support\Str;
-use Nano7\Foundation\Support\Filesystem;
+use Nano7\Support\Str;
+use Nano7\Support\Filesystem;
 use Nano7\Validation\Json\Checks\AnyCheck;
 use Nano7\Validation\Json\Checks\ArrayCheck;
 use Nano7\Validation\Json\Checks\NullCheck;

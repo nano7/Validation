@@ -1,6 +1,6 @@
 <?php namespace Nano7\Validation;
 
-use Nano7\Foundation\Support\Arr;
+use Nano7\Support\Arr;
 use Nano7\Validation\Json\ValidatorJson;
 
 class Validator

@@ -1,6 +1,6 @@
 <?php namespace Nano7\Validation\Json\Checks;
 
-use Nano7\Foundation\Support\Arr;
+use Nano7\Support\Arr;
 
 trait ObjectCheck
 {
